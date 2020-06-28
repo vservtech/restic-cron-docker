@@ -1,0 +1,22 @@
+{
+  "name": "ansible-controller-docker",
+  "version": "1.0.0",
+  "description": "This repo contains a dockerfile which allows running an ansible controller inside a docker container.",
+  "private": true,
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vserv-tech/ansible-controller-docker.git"
+  },
+  "keywords": [
+    "docker",
+    "docker-compose",
+    "ansible"
+  ],
+  "author": "Benjamin Jesuiter <bjesuiter@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vserv-tech/ansible-controller-docker/issues"
+  },
+  "homepage": "https://github.com/vserv-tech/ansible-controller-docker#readme"
+}
