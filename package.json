@@ -4,10 +4,13 @@
   "description": "This repo contains a dockerfile which allows running an ansible controller inside a docker container.",
   "private": true,
   "config": {
-    "image": "ansible-controller-docker"
+    "image": "vservtech/ansible-controller-docker"
   },
   "scripts": {
-    "build": "docker build -t ${npm_package_config_image}:$(npx project-version) ."
+    "build": "docker build -t ${npm_package_config_image}:$(npx project-version) .",
+    "tag:latest": "docker tag ${npm_package_config_image}:$(npx project-version) ${npm_package_config_image}:latest",
+    "test": "docker-compose -f docker.test.yml up ",
+    "deploy": "docker push ${npm_package_config_image}:$(npx project-version)"
   },
   "repository": {
     "type": "git",
