@@ -6,7 +6,10 @@
   "config": {
     "image": "vservtech/ansible-controller-docker"
   },
-  "scripts": {
+  "scripts": {    
+    "start": "docker-compose up -d --build",
+    "stop": "docker-compose down", 
+    "exec": "docker-compose run ansible",
     "build": "docker build -t ${npm_package_config_image}:$(npx project-version) .",
     "tag:latest": "docker tag ${npm_package_config_image}:$(npx project-version) ${npm_package_config_image}:latest",
     "test": "docker-compose -f docker.test.yml up ",
