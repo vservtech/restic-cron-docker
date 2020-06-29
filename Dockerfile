@@ -3,7 +3,9 @@ FROM alpine:3.12
 RUN apk add ansible
 RUN apk add python3
 
-RUN mkdir /opt/ansible-workdir
+ENV ANSIBLE_WORKDIR=/opt/ansible-workdir
 
-WORKDIR /opt/ansible-workdir
+RUN mkdir ${ANSIBLE_WORKDIR}
+
+WORKDIR ${ANSIBLE_WORKDIR}
 

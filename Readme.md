@@ -17,6 +17,7 @@ and be good to go with the ansible command line inside this docker image.
 
 Look into docker-compose.yml for this repo: 
 - bind mount all interesting files & configuration folders into the docker image, like `./ansible/hosts`
+- playbooks can be mounted to `/opt/ansible-workdir`, which is the WORKDIR defined in the Dockerfile
 - start with `docker-compose up`
 - run a command inside this container with docker-compose run ansible ansible all -m ping -u you 
 

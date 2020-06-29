@@ -11,4 +11,4 @@ services:
         build: .
         volumes:
             - ./ansible/hosts:/etc/ansible/hosts
-            - ./ansible/playbooks/:/opt/ansible-workdir/
+            - ./ansible/playbooks/:/opt/ansible-workdir
