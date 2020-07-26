@@ -38,7 +38,7 @@ Look into docker-compose.yml for this repo:
 
 # Changelog 
 
-## 1.3.0
+## 1.4.0
 
 - add SSH Client:  OpenSSH_8.3p1, OpenSSL 1.1.1g  21 Apr 2020
 
