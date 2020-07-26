@@ -40,14 +40,16 @@ Look into docker-compose.yml for this repo:
 
 ## 1.3.0
 
-adds 
-    - sshpass 1.06
+adds  
+
+- sshpass 1.06
 
 ## 1.2.0 
 
-ships with 
-    - rsync 3.1.3
-    - Python 3.8.3
-    - ansible 2.9.9
+ships with  
+
+- rsync 3.1.3
+- Python 3.8.3
+- ansible 2.9.9
 
 
