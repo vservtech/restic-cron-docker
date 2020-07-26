@@ -21,11 +21,27 @@ Look into docker-compose.yml for this repo:
 - start with `docker-compose up`
 - run a command inside this container with docker-compose run ansible ansible all -m ping -u you 
 
+## More usage hints 
+
+- run `npm run exec` to get shell inside container 
+
 ## For Developers: New Image release to docker
 
-1. Build Docker image with `npm run build`
-2. Tag latest with `npm run tag:latest`
-3. Test with `npm run test`
-4. Deploy with `npm run deploy`
+1. Sign-off new version for npm package (`npm version xxx`)
+2. Build Docker image with `npm run build`
+3. Tag latest with `npm run tag:latest`
+4. Test with `npm run test`
+5. Deploy with `npm run deploy`
+
+------
+
+# Changelog 
+
+## 1.2.0 
+
+ships with 
+    - rsync 3.1.3
+    - Python 3.8.3
+    - ansible 2.9.9
 
 
