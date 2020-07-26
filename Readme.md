@@ -40,9 +40,11 @@ Look into docker-compose.yml for this repo:
 
 ## 1.3.0
 
-adds  
+- add SSH Client:  OpenSSH_8.3p1, OpenSSL 1.1.1g  21 Apr 2020
 
-- sshpass 1.06
+## 1.3.0
+
+- add sshpass 1.06
 
 ## 1.2.0 
 
