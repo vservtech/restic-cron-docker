@@ -1,6 +1,7 @@
 # Ansible Controller Docker
 
-This repo contains a dockerfile which allows running an ansible controller inside a docker container.
+This repo contains a dockerfile which allows running an ansible controller inside a docker container.  
+[Link to Github](https://github.com/vservtech/ansible-controller-docker)
 
 ## Why?
 
