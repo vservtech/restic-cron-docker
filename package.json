@@ -12,7 +12,7 @@
     "exec": "docker-compose run ansible",
     "build": "docker build -t ${npm_package_config_image}:$(npx project-version) .",
     "tag:latest": "docker tag ${npm_package_config_image}:$(npx project-version) ${npm_package_config_image}:latest",
-    "test": "docker-compose -f docker.test.yml up ",
+    "test": "docker-compose -f docker.test.yml up",
     "deploy": "run-s push:version push:latest",
     "push:version": "docker push ${npm_package_config_image}:$(npx project-version)",
     "push:latest": "docker push ${npm_package_config_image}:latest"

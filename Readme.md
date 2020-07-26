@@ -37,6 +37,11 @@ Look into docker-compose.yml for this repo:
 
 # Changelog 
 
+## 1.2.1
+
+adds 
+    - sshpass 1.06
+
 ## 1.2.0 
 
 ships with 
