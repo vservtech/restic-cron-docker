@@ -1,6 +1,6 @@
 {
   "name": "ansible-controller-docker",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "This repo contains a dockerfile which allows running an ansible controller inside a docker container.",
   "private": true,
   "config": {
