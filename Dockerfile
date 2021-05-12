@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3
 
 RUN apk add ansible python3
 RUN apk add rsync sshpass openssh-client
