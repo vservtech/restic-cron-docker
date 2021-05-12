@@ -34,13 +34,35 @@ Look into docker-compose.yml for this repo:
 4. Test with `npm run start` && `npm run exec` to get shell access into the container
 5. Deploy with `npm run deploy`
 
+## How to get versions of installed packages 
+
+```
+apk info ansible python3 rsync sshpass openssh-client
+# CAUTION: This will only give the package number for these packages, which is not neccessarily equal to program version number!
+
+ansible --version
+python3 --version
+apk info openssh-client
+apk info openssl
+```
+
 ------
 
 # Changelog 
 
-## 1.4.0
+## 1.5.0 - 2021-05-12
 
-- add SSH Client:  OpenSSH_8.3p1, OpenSSL 1.1.1g  21 Apr 2020
+ships with 
+
+- ansible 2.10.5
+- Python3 3.8.10
+- rsync v3.13.0_rc2-264-g725ac7fb
+- openssh-client-8.4_p1-r3
+- openssl-1.1.1k-r0
+
+## 1.4.0 - 2020-04-21
+
+- add SSH Client:  OpenSSH_8.3p1, OpenSSL 1.1.1g 
 
 ## 1.3.0
 
