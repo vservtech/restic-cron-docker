@@ -42,13 +42,24 @@ apk info ansible python3 rsync sshpass openssh-client
 
 ansible --version
 python3 --version
-apk info openssh-client
-apk info openssl
+apt info openssh-client
+apt info openssl
 ```
 
 ------
 
 # Changelog 
+
+## 2.0.0 - 2021-08-07
+
+- use python:3.9-buster as new base image (instead of alpine:3)
+- install ansible via pip instead of alpine package manager to get newest versions 
+  (apk seems to have only 2.10.5 version of ansible, but ansible is currently at version 4.3!)
+
+ships with: 
+
+- Python 3.9.6
+- ansible 4 (presumeably), ansible core 2.11.3 
 
 ## 1.5.0 - 2021-05-12
 
