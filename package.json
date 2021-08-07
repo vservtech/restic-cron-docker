@@ -9,7 +9,7 @@
   "scripts": {
     "start": "docker compose up -d --build",
     "stop": "docker compose down",
-    "exec": "docker compose run ansible",
+    "exec": "docker compose run ansible /bin/bash",
     "shell": "docker compose run ansible ash",
     "build": "docker build -t ${npm_package_config_image}:$(npx project-version) .",
     "tag:latest": "docker tag ${npm_package_config_image}:$(npx project-version) ${npm_package_config_image}:latest",
