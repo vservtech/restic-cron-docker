@@ -28,11 +28,12 @@ Look into docker-compose.yml for this repo:
 
 ## For Developers: New Image release to docker
 
-1. Sign-off new version for npm package (`npm version xxx`)
-2. Build Docker image with `npm run build`
-3. Tag latest with `npm run tag:latest`
-4. Test with `npm run start` && `npm run exec` to get shell access into the container
-5. Deploy with `npm run deploy`
+1. Update Changelog
+2. Sign-off new version for npm package (`npm version xxx`)
+3. Build Docker image with `npm run build`
+4. Tag latest with `npm run tag:latest`
+5. Test with `npm run start` && `npm run exec` to get shell access into the container
+6. Deploy with `npm run deploy`
 
 ## How to get versions of installed packages 
 
@@ -49,6 +50,12 @@ apt info openssl
 ------
 
 # Changelog 
+
+## 2.1.0 & 2.1.1 - 2021-08-19 
+
+(two versions because 2.1.0 misses this changelog entry)
+
+- aded vim to the docker image
 
 ## 2.0.0 - 2021-08-07
 
