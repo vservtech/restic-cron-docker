@@ -3,8 +3,7 @@
 This repo contains a dockerfile which allows running an ansible controller inside a docker container.  
 [Link to Github](https://github.com/vservtech/ansible-controller-docker)
 
-**[CHANGELOG](https://github.com/vservtech/ansible-controller-docker/changelog.md)**
-
+**[CHANGELOG](https://github.com/vservtech/ansible-controller-docker/blob/main/changelog.md)**
 ## Why?
 
 I want to setup my own virtual server and have it configured via code. 
