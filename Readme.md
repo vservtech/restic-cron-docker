@@ -33,7 +33,7 @@ Look into docker-compose.yml for this repo:
 2. Sign-off new version for npm package (`npm version xxx`)
 3. Build Docker image with `npm run build`
 4. Tag latest with `npm run tag:latest`
-5. Test with `npm run start` && `npm run exec` to get shell access into the container
+5. Test with `npm run exec` to get shell access into the container
 6. Deploy with `npm run deploy`
 
 ## How to get versions of installed packages 
