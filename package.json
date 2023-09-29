@@ -1,22 +1,20 @@
 {
   "name": "ansible-controller-docker",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "This repo contains a dockerfile which allows running an ansible controller inside a docker container.",
   "private": true,
-  "config": {
-    "image": "vservtech/ansible-controller-docker"
-  },
   "scripts": {
     "start": "docker compose up -d --build",
     "stop": "docker compose down",
     "exec": "docker compose run ansible /bin/bash",
     "shell": "docker compose run ansible ash",
-    "build": "docker build -t ${npm_package_config_image}:$(npx project-version) .",
-    "tag:latest": "docker tag ${npm_package_config_image}:$(npx project-version) ${npm_package_config_image}:latest",
+    "build": "docker build -t ${image_name}:$(bunx project-version) .",
+    "tag:latest": "docker tag ${image_name}:$(bunx project-version) ${image_name}:latest",
     "test": "docker-compose -f docker.test.yml up",
+    "docker-login": "docker login",
     "deploy": "run-s tag:latest push:version push:latest",
-    "push:version": "docker push ${npm_package_config_image}:$(npx project-version)",
-    "push:latest": "docker push ${npm_package_config_image}:latest"
+    "push:version": "docker push ${image_name}:$(bunx project-version)",
+    "push:latest": "docker push ${image_name}:latest"
   },
   "repository": {
     "type": "git",
