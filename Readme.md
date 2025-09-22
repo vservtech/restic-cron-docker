@@ -48,7 +48,7 @@ Look into docker-compose.yml for this repo:
    2. `python3 --version`
    3. `apk info openssh-client`
    4. `apk info openssl`
-5. Sign-off new version for npm package (`bun version xxx`)
+5. Sign-off new version for npm package
 6. Build Docker image with `bun run build`
 7. Tag latest with `bun run tag:latest`
 8. Deploy with `bun run deploy`
