@@ -6,8 +6,8 @@
   "scripts": {
     "start": "docker compose up -d --build",
     "stop": "docker compose down",
-    "exec": "docker compose run --remove-orphans ansible /bin/bash",
-    "shell": "docker compose run --remove-orphans ansible ash",
+    "exec": "docker compose run --build --remove-orphans ansible /bin/bash",
+    "shell": "docker compose run --build --remove-orphans ansible ash",
     "build": "docker build -t $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) .",
     "tag:latest": "docker tag $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) $(bun -e \"console.log(Bun.env.image_name)\"):latest",
     "test": "docker-compose -f docker.test.yml up",

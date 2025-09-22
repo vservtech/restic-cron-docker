@@ -1,16 +1,20 @@
 FROM python:3.13.7-alpine3.22
 
-# RUN echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
-# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-RUN apk add rsync sshpass openssh-client vim bash zsh
+# Install system dependencies
+RUN apk add --no-cache rsync sshpass openssh-client vim bash zsh
 
-# Install ansible via pip to avoid old repos*
-RUN python -m pip install pipx
-RUN python -m pipx install ansible-core==2.18
+# Install pipx and Ansible via pipx (isolated)
+RUN python -m pip install --no-cache-dir pipx
+RUN python -m pipx install ansible-core==2.18.9  # Pin to latest 2.18 patch for stability
 
-ENV ANSIBLE_WORKDIR=/opt/ansible-workdir
+# Ensure pipx binaries are in PATH (critical for Docker root user)
+ENV PATH="/root/.local/bin:${PATH}"
+ENV PIPX_BIN_DIR="/root/.local/bin"
 
-RUN mkdir ${ANSIBLE_WORKDIR}
+# Optional: Enable shell completion (if needed for zsh/bash)
+RUN pipx inject ansible-core argcomplete
 
-WORKDIR ${ANSIBLE_WORKDIR}
-
+# Set workdir
+ENV ANSIBLE_WORKDIR="/opt/ansible-workdir"
+RUN mkdir -p "${ANSIBLE_WORKDIR}"
+WORKDIR "${ANSIBLE_WORKDIR}"
