@@ -1,8 +1,14 @@
 # Changelog
 
-## 2.2.0 - 2025-09-22
+## 2.3.0 - 2025-09-22
 
-- update to
+- update to ansible core 2.18.9
+- update to python 3.13.7
+- update to alpine 3.22
+- update to openssh-client-default-10.0_p1-r7
+- update to openssl-3.5.2-r0
+
+## 2.2.0 - unknown
 
 ## 2.1.0 & 2.1.1 - 2021-08-19
 

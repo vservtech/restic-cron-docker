@@ -1,7 +1,7 @@
 FROM python:3.13.7-alpine3.22
 
 # Install system dependencies
-RUN apk add --no-cache rsync sshpass openssh-client vim bash zsh
+RUN apk add --no-cache rsync sshpass openssh-client vim bash zsh openssl
 
 # Install pipx and Ansible via pipx (isolated)
 RUN python -m pip install --no-cache-dir pipx

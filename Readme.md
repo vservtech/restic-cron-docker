@@ -42,10 +42,14 @@ Look into docker-compose.yml for this repo:
    here for new versions: https://hub.docker.com/_/python
 2. check for updates of ansible core:
    https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
-3. Build Docker image with `bun run build`
-4. Test with `bun run exec` to get shell access into the container
-5. Get new tool versions and update Changelog.md
-6. Sign-off new version for npm package (`bun version xxx`)
+3. Test with `bun run exec` to get shell access into the container
+4. Get new tool versions and update Changelog.md
+   1. `ansible --version`
+   2. `python3 --version`
+   3. `apk info openssh-client`
+   4. `apk info openssl`
+5. Sign-off new version for npm package (`bun version xxx`)
+6. Build Docker image with `bun run build`
 7. Tag latest with `bun run tag:latest`
 8. Deploy with `bun run deploy`
 
