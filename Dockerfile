@@ -11,6 +11,9 @@ RUN python -m pipx install ansible-core==2.18.9  # Pin to latest 2.18 patch for 
 ENV PATH="/root/.local/bin:${PATH}"
 ENV PIPX_BIN_DIR="/root/.local/bin"
 
+# Check installed modules with: ansible-doc -l
+RUN ansible-galaxy collection install ansible.posix
+
 # Optional: Enable shell completion (if needed for zsh/bash)
 RUN pipx inject ansible-core argcomplete
 

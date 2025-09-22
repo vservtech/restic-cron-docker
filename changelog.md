@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0 - 2025-09-22
+
+- install ansible.posix collection into the image
+
 ## 2.3.0 - 2025-09-22
 
 - update to ansible core 2.18.9
