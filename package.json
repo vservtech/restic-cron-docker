@@ -6,15 +6,15 @@
   "scripts": {
     "start": "docker compose up -d --build",
     "stop": "docker compose down",
-    "exec": "docker compose run ansible /bin/bash",
-    "shell": "docker compose run ansible ash",
-    "build": "docker build -t ${image_name}:$(bunx project-version) .",
-    "tag:latest": "docker tag ${image_name}:$(bunx project-version) ${image_name}:latest",
+    "exec": "docker compose run --remove-orphans ansible /bin/bash",
+    "shell": "docker compose run --remove-orphans ansible ash",
+    "build": "docker build -t $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) .",
+    "tag:latest": "docker tag $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) $(bun -e \"console.log(Bun.env.image_name)\"):latest",
     "test": "docker-compose -f docker.test.yml up",
     "docker-login": "docker login",
     "deploy": "run-s tag:latest push:version push:latest",
-    "push:version": "docker push ${image_name}:$(bunx project-version)",
-    "push:latest": "docker push ${image_name}:latest"
+    "push:version": "docker push $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version)",
+    "push:latest": "docker push $(bun -e \"console.log(Bun.env.image_name)\"):latest"
   },
   "repository": {
     "type": "git",

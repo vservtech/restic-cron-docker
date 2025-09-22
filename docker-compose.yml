@@ -1,5 +1,3 @@
-version: "3.8"
-
 # run commands inside here with: 
 # docker-compose run ansible bash
 # if you want to run an ansible command, replace bash with ansible (yes, two times ansible in a row)
