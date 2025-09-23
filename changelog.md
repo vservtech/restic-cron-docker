@@ -1,8 +1,15 @@
 # Changelog
 
-## next
+## 1.1.0 - 2025-09-23
 
 - remove duplicated user check block in docker-entrypoint
+- add ssh into the container
+
+Dependencies
+
+- restic version: v0.18.0
+- supercronic -version: v0.2.34
+- ssh -V: OpenSSH_10.0p2, OpenSSL 3.5.1 1 Jul 2025
 
 ## 1.0.4 - 2025-09-23
 

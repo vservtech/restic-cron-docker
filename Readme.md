@@ -115,11 +115,17 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
    https://hub.docker.com/_/alpine/tags
 2. Test with `bun run shell` to get shell access into the container
 3. Get new tool versions and update Changelog.md
-   1. `restic version`
-4. Sign-off new version for npm package
-5. Deploy with `bun run deploy` (runs build, tag:latest and push:version and
+   ```sh
+   restic version
+   supercronic -version
+   ssh -V
+   ```
+4. Update the package.json version
+5. Update the CHANGELOG.md
+6. Sign-off new version for npm package
+7. Deploy with `bun run deploy` (runs build, tag:latest and push:version and
    push:latest)
-6. Commit and tag the release in git
+8. Commit and tag the release in git
 
 ## Ideas
 

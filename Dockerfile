@@ -35,7 +35,8 @@ RUN set -eux; \
 
 # Install deps needed at runtime
 # Installing bash because most users expect this to be available for cronjob scripts
-RUN apk add --no-cache restic su-exec bash
+# Installing openssh to allow restic to use ssh client for backups + having scp binary (also installs sshd, but this is not needed here)
+RUN apk add --no-cache restic su-exec bash openssh
 
 # Set workdir
 ENV CRON_DIR="/opt/cron"
