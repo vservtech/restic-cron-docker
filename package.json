@@ -11,14 +11,13 @@
     "start": "docker compose up -d --build --remove-orphans",
     "stop": "docker compose down",
     "shell": "docker compose run --build --remove-orphans restic-cron ash",
-    "build": "docker build -t $npm_package_config_image_name:$(bunx project-version) .",
-    "buildx": "docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull -t $npm_package_config_image_name:$(bunx project-version) .",
-    "tag:latest": "docker tag $npm_package_config_image_name:$(bunx project-version) $npm_package_config_image_name:latest",
+    "build": "docker build -t $npm_package_config_image_name:$(bunx project-version) -t $npm_package_config_image_name:latest .",
+    "build-amd64": "docker buildx build --platform linux/amd64 --no-cache --pull --load -t $npm_package_config_image_name:$(bunx project-version) . --load",
     "docker-login": "docker login",
-    "deploy": "run-s build tag:latest push:version push:latest",
-    "deployx": "docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull -t $npm_package_config_image_name:latest -t $npm_package_config_image_name:$npm_package_config_prod_version --push ./variants/ubuntu-pure",
+    "deployx": "docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull --push -t $npm_package_config_image_name:$(bunx project-version) -t $npm_package_config_image_name:latest .",
     "push:version": "docker push $npm_package_config_image_name:$(bunx project-version)",
-    "push:latest": "docker push $npm_package_config_image_name:latest"
+    "push:latest": "docker push $npm_package_config_image_name:latest",
+    "setup-buildx": "docker buildx create --name jb-buildx --use"
   },
   "repository": {
     "type": "git",
