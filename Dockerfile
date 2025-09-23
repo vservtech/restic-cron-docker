@@ -3,8 +3,8 @@
 
 FROM alpine:3.22.1
 
-# Install alpine dependencies
-RUN apk add --no-cache restic ca-certificates tzdata curl
+# Install base dependencies
+RUN apk add --no-cache ca-certificates tzdata curl
 
 # Install supercronic from official github releases
 ENV SUPERCRONIC_VERSION=v0.2.34
@@ -18,9 +18,17 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
+# Install deps needed at runtime
+RUN apk add --no-cache restic su-exec
+
 # Set workdir
 ENV CRON_DIR="/opt/cron"
 RUN mkdir -p "${CRON_DIR}"
 WORKDIR "${CRON_DIR}"
 
-
+# Add entrypoint script 
+COPY docker-entrypoint.sh /usr/local/bin/entrypoint
+RUN chmod +x /usr/local/bin/entrypoint
+# Note: Entrypoint is always run with either CMD as params or the command passed to docker run
+ENTRYPOINT ["/usr/local/bin/entrypoint"]
+CMD ["supercronic", "-passthrough-logs", "/opt/cron/crontab"]
