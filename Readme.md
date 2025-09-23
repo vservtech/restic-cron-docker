@@ -14,11 +14,27 @@ and run the restic backups on a schedule.
 
 ## How to use this docker image
 
-TODO
+### How to use `supercronic`
 
-## More usage hints
+Instructions: https://github.com/aptible/supercronic
+
+```shell
+supercronic -help
+supercronic -version
+```
+
+### How to use `restic`
+
+Preparation: Create a restic repository, if not already done. See:
+https://restic.readthedocs.io/en/latest/030_preparing_a_new_repo.html
+
+Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
+
+## Get Shell Access in the container
 
 - run `bun run shell` to get shell inside container
+- from outside: the container is based on alpine, so the shell to start is
+  `/bin/ash`
 
 ## For Developers: New Image release to docker
 
