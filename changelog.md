@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 - 2025-09-23
+
+- fix multi-arch build to include the right arch for supercronic (amd64 or
+  arm64)
+
 ## 1.0.1 - 2025-09-23
 
 - multi-arch build: for linux/amd64 and linux/arm64
