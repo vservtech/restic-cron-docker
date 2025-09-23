@@ -19,7 +19,8 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 # Install deps needed at runtime
-RUN apk add --no-cache restic su-exec
+# Installing bash because most users expect this to be available for cronjob scripts
+RUN apk add --no-cache restic su-exec bash
 
 # Set workdir
 ENV CRON_DIR="/opt/cron"
