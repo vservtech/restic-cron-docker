@@ -27,7 +27,7 @@ RUN mkdir -p "${CRON_DIR}"
 WORKDIR "${CRON_DIR}"
 
 # Add entrypoint script 
-COPY docker-entrypoint.sh /usr/local/bin/entrypoint
+COPY src/docker-entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint
 # Note: Entrypoint is always run with either CMD as params or the command passed to docker run
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
