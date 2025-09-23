@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 - 2025-09-23
+
+- add missing DESIRED_UID to entrypoint script
+
 ## 1.0.3 - 2025-09-23
 
 - update the docker-entrypoint to improve resilience

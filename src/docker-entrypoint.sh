@@ -3,6 +3,7 @@ set -eu
 # 1) Resolve desired UID/GID
 # When setting `user: "${MY_UID}:${MY_GID}"` in compose.yaml, the HOST_UID and HOST_GID values are set
 # MY_UID and MY_GID are intended to be set by ansible on deploymentDESIRED_UID="${HOST_UID:-$(id -u)}"
+DESIRED_UID="${HOST_UID:-$(id -u)}"
 DESIRED_GID="${HOST_GID:-$(id -g)}"
 
 echo "ENTRY DEBUG: Running with UID: ${DESIRED_UID}"
@@ -22,6 +23,15 @@ GROUP_NAME="$(getent group "${DESIRED_GID}" | cut -d: -f1 || true)"
 [ -z "${GROUP_NAME}" ] && GROUP_NAME="appgroup"
 
 # Ensure user exists
+if ! getent passwd "${DESIRED_UID}" >/dev/null 2>&1 && \
+   ! getent passwd "appuser" >/dev/null 2>&1; then
+  if ! adduser -D -u "${DESIRED_UID}" -G "${GROUP_NAME}" appuser; then
+    echo "ENTRY ERROR: adduser failed for UID ${DESIRED_UID}" >&2
+    exit 1
+  fi
+fi
+
+# Ensure user exists in container 
 if ! getent passwd "${DESIRED_UID}" >/dev/null 2>&1 && \
    ! getent passwd "appuser" >/dev/null 2>&1; then
   if ! adduser -D -u "${DESIRED_UID}" -G "${GROUP_NAME}" appuser; then
