@@ -2,7 +2,10 @@
 set -eu
 
 # 1) Resolve desired UID/GID
-# When setting `user: "${MY_UID}:${MY_GID}"` in compose.yaml, HOST_UID/HOST_GID are set.
+# Pass the env vars HOST_UID/HOST_GID to the container, BUT DO NOT run the container with the specified user! 
+# aka no "user: ${HOST_UID}:${HOST_GID}" in compose.yaml
+# This script may need to create the user and group inside the container and has to be root for that. 
+# Afterwards it drops permissions to the desired user/group.
 # Otherwise fall back to current process uid/gid inside the container (mostly root).
 DESIRED_UID="${HOST_UID:-$(id -u)}"
 DESIRED_GID="${HOST_GID:-$(id -g)}"
@@ -41,7 +44,7 @@ if [ -d /opt/cron ]; then
   chown -R "${USER_NAME}:${GROUP_NAME}" /opt/cron
 fi
 
-echo "ENTRY DEBUG: Command which should be run: $*"
+echo "ENTRY DEBUG: Command passed to docker exec: $*"
 
 # 5) If already correct uid/gid, just exec
 if [ "$(id -u)" = "${DESIRED_UID}" ] && [ "$(id -g)" = "${DESIRED_GID}" ]; then
