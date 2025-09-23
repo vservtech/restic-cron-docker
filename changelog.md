@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 - 2025-09-23
+
+- update the docker-entrypoint to improve resilience
+
 ## 1.0.2 - 2025-09-23
 
 - fix multi-arch build to include the right arch for supercronic (amd64 or
