@@ -95,3 +95,8 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
 5. Deploy with `bun run deploy` (runs build, tag:latest and push:version and
    push:latest)
 6. Commit and tag the release in git
+
+## Ideas
+
+- TODO: Evaluate adding bun into this image for simple (JavaScript-)scripting:
+  https://bun.com/docs/runtime/shell#sh-file-loader
