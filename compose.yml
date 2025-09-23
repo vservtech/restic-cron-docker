@@ -3,6 +3,4 @@ services:
         build: .
         volumes:
             - ./test/crontab:/opt/cron/crontab
-        environment:
-            - HOST_UID=$(id -u)
-            - HOST_GID=$(id -g)
+        user: "${MY_UID}:${MY_GID}"

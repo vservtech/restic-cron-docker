@@ -31,4 +31,4 @@ COPY src/docker-entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint
 # Note: Entrypoint is always run with either CMD as params or the command passed to docker run
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
-CMD ["supercronic", "-passthrough-logs", "/opt/cron/crontab"]
+CMD ["/usr/local/bin/supercronic", "-passthrough-logs", "/opt/cron/crontab"]
