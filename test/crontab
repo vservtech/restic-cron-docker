@@ -13,10 +13,10 @@
 # Year           No           1970–2099         * / , -
 
 # Run every minute
-*/1 * * * * echo "hello every minute: $(date -u + \"%Y-%m-%dT%H:%M:%S.%3NZ\")"
+*/1 * * * * echo "hello every minute: $(date -u + \"%Y-%m-%dT%H:%M:%SZ\")"
 
-# Run every 2 seconds
-*/2 * * * * * * echo "hello every 2 seconds: $(date -u + \"%Y-%m-%dT%H:%M:%S.%3NZ\")"
+# Run every second
+*/1 * * * * * * echo "hello every second: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
 # Run once every hour
 # @hourly echo "$SOME_HOURLY_JOB"
