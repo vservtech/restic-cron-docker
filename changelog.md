@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 - 2025-09-23
+
+- add HOST_USER and HOST_GROUP to entrypoint script - allows passing in the name
+  of the user and group to run the container as => may fix the issue that ssh
+  inside the container does not use the known_hosts and config files properly
+
 ## 1.1.0 - 2025-09-23
 
 - remove duplicated user check block in docker-entrypoint

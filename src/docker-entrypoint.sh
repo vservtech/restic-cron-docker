@@ -9,35 +9,39 @@ set -eu
 # Otherwise fall back to current process uid/gid inside the container (mostly root).
 DESIRED_UID="${HOST_UID:-$(id -u)}"
 DESIRED_GID="${HOST_GID:-$(id -g)}"
+DESIRED_USER="${HOST_USER:-appuser}"
+DESIRED_GROUP="${HOST_GROUP:-appgroup}"
 
 echo "ENTRY DEBUG: Running with UID: ${DESIRED_UID}"
 echo "ENTRY DEBUG: Running with GID: ${DESIRED_GID}"
+echo "ENTRY DEBUG: Running with USER: ${DESIRED_USER}"
+echo "ENTRY DEBUG: Running with GROUP: ${DESIRED_GROUP}"
 
 # 2) Ensure group exists inside the container for DESIRED_GID
 if ! getent group "${DESIRED_GID}" >/dev/null 2>&1 && \
-   ! getent group "appgroup" >/dev/null 2>&1; then
-  if ! addgroup -g "${DESIRED_GID}" appgroup; then
-    echo "ENTRY ERROR: addgroup failed for GID ${DESIRED_GID}" >&2
+   ! getent group "${DESIRED_GROUP}" >/dev/null 2>&1; then
+  if ! addgroup -g "${DESIRED_GID}" "${DESIRED_GROUP}"; then
+    echo "ENTRY ERROR: addgroup failed for GID ${DESIRED_GID} and GROUP ${DESIRED_GROUP}" >&2
     exit 1
   fi
 fi
 
 # Resolve group name (by gid first; fallback to appgroup)
 GROUP_NAME="$(getent group "${DESIRED_GID}" | cut -d: -f1 || true)"
-[ -z "${GROUP_NAME}" ] && GROUP_NAME="appgroup"
+[ -z "${GROUP_NAME}" ] && GROUP_NAME="${DESIRED_GROUP}"
 
 # 3) Ensure user exists inside the container for DESIRED_UID
 if ! getent passwd "${DESIRED_UID}" >/dev/null 2>&1 && \
-   ! getent passwd "appuser" >/dev/null 2>&1; then
-  if ! adduser -D -u "${DESIRED_UID}" -G "${GROUP_NAME}" appuser; then
-    echo "ENTRY ERROR: adduser failed for UID ${DESIRED_UID}" >&2
+   ! getent passwd "${DESIRED_USER}" >/dev/null 2>&1; then
+  if ! adduser -D -u "${DESIRED_UID}" -G "${GROUP_NAME}" "${DESIRED_USER}"; then
+    echo "ENTRY ERROR: adduser failed for UID ${DESIRED_UID} and USER ${DESIRED_USER}" >&2
     exit 1
   fi
-fi
+fi  
 
 # Resolve user name (by uid first; fallback)
 USER_NAME="$(getent passwd "${DESIRED_UID}" | cut -d: -f1 || true)"
-[ -z "${USER_NAME}" ] && USER_NAME="appuser"
+[ -z "${USER_NAME}" ] && USER_NAME="${DESIRED_USER}"
 
 # 4) Ensure working directories are owned
 if [ -d /opt/cron ]; then
