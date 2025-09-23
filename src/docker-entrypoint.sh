@@ -1,8 +1,9 @@
 #!/bin/sh
 set -eu
+
 # 1) Resolve desired UID/GID
-# When setting `user: "${MY_UID}:${MY_GID}"` in compose.yaml, the HOST_UID and HOST_GID values are set
-# MY_UID and MY_GID are intended to be set by ansible on deploymentDESIRED_UID="${HOST_UID:-$(id -u)}"
+# When setting `user: "${MY_UID}:${MY_GID}"` in compose.yaml, HOST_UID/HOST_GID are set.
+# Otherwise fall back to current process uid/gid inside the container (mostly root).
 DESIRED_UID="${HOST_UID:-$(id -u)}"
 DESIRED_GID="${HOST_GID:-$(id -g)}"
 
@@ -22,7 +23,7 @@ fi
 GROUP_NAME="$(getent group "${DESIRED_GID}" | cut -d: -f1 || true)"
 [ -z "${GROUP_NAME}" ] && GROUP_NAME="appgroup"
 
-# Ensure user exists
+# 3) Ensure user exists inside the container for DESIRED_UID
 if ! getent passwd "${DESIRED_UID}" >/dev/null 2>&1 && \
    ! getent passwd "appuser" >/dev/null 2>&1; then
   if ! adduser -D -u "${DESIRED_UID}" -G "${GROUP_NAME}" appuser; then
@@ -35,18 +36,17 @@ fi
 USER_NAME="$(getent passwd "${DESIRED_UID}" | cut -d: -f1 || true)"
 [ -z "${USER_NAME}" ] && USER_NAME="appuser"
 
-# Own only if path exists; avoid glob failing with set -u
+# 4) Ensure working directories are owned
 if [ -d /opt/cron ]; then
-  # Use a safe path expansion
   chown -R "${USER_NAME}:${GROUP_NAME}" /opt/cron
 fi
 
 echo "ENTRY DEBUG: Command which should be run: $*"
 
-# If already correct uid/gid, exec directly
+# 5) If already correct uid/gid, just exec
 if [ "$(id -u)" = "${DESIRED_UID}" ] && [ "$(id -g)" = "${DESIRED_GID}" ]; then
   exec "$@"
 fi
 
-# Else exec through su-exec
+# 6) Exec as that user
 exec su-exec "${USER_NAME}:${GROUP_NAME}" "$@"
