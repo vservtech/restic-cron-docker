@@ -1,5 +1,3 @@
-version: "3.8"
-
 # run commands inside here with: 
 # docker-compose run ansible bash
 # if you want to run an ansible command, replace bash with ansible (yes, two times ansible in a row)
@@ -7,7 +5,5 @@ version: "3.8"
 # docker-compose run ansible ansible all -m ping -u you 
 
 services: 
-    ansible: 
-        image: vservtech/ansible-controller-docker:latest
-        volumes:
-            - ./ansible/hosts:/etc/ansible/hosts
+    restic: 
+        build: .

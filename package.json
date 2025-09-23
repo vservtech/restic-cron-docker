@@ -1,36 +1,35 @@
 {
-  "name": "ansible-controller-docker",
-  "version": "2.4.0",
-  "description": "This repo contains a dockerfile which allows running an ansible controller inside a docker container.",
+  "name": "restic-cron-docker",
+  "version": "1.0.0",
+  "description": "This repo contains a dockerfile which allows running a restic cron job inside a docker container.",
   "private": true,
   "scripts": {
     "start": "docker compose up -d --build",
     "stop": "docker compose down",
-    "exec": "docker compose run --build --remove-orphans ansible /bin/bash",
-    "shell": "docker compose run --build --remove-orphans ansible ash",
+    "shell": "docker compose run --build --remove-orphans restic ash",
     "build": "docker build -t $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) .",
     "tag:latest": "docker tag $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) $(bun -e \"console.log(Bun.env.image_name)\"):latest",
-    "test": "docker-compose -f docker.test.yml up",
+    "test": "docker-compose -f docker.test.yml up restic",
     "docker-login": "docker login",
-    "deploy": "run-s tag:latest push:version push:latest",
+    "deploy": "run-s build tag:latest push:version push:latest",
     "push:version": "docker push $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version)",
     "push:latest": "docker push $(bun -e \"console.log(Bun.env.image_name)\"):latest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vserv-tech/ansible-controller-docker.git"
+    "url": "git+https://github.com/vserv-tech/restic-cron-docker.git"
   },
   "keywords": [
     "docker",
     "docker-compose",
-    "ansible"
+    "restic"
   ],
   "author": "Benjamin Jesuiter <bjesuiter@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vserv-tech/ansible-controller-docker/issues"
+    "url": "https://github.com/vserv-tech/restic-cron-docker/issues"
   },
-  "homepage": "https://github.com/vserv-tech/ansible-controller-docker#readme",
+  "homepage": "https://github.com/vserv-tech/restic-cron-docker#readme",
   "dependencies": {
     "npm-run-all": "^4.1.5",
     "project-version": "^1.2.1"
