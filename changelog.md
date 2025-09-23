@@ -1,5 +1,9 @@
 # Changelog
 
+## next
+
+- remove duplicated user check block in docker-entrypoint
+
 ## 1.0.4 - 2025-09-23
 
 - add missing DESIRED_UID to entrypoint script

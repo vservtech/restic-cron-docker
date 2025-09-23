@@ -31,15 +31,6 @@ if ! getent passwd "${DESIRED_UID}" >/dev/null 2>&1 && \
   fi
 fi
 
-# Ensure user exists in container 
-if ! getent passwd "${DESIRED_UID}" >/dev/null 2>&1 && \
-   ! getent passwd "appuser" >/dev/null 2>&1; then
-  if ! adduser -D -u "${DESIRED_UID}" -G "${GROUP_NAME}" appuser; then
-    echo "ENTRY ERROR: adduser failed for UID ${DESIRED_UID}" >&2
-    exit 1
-  fi
-fi
-
 # Resolve user name (by uid first; fallback)
 USER_NAME="$(getent passwd "${DESIRED_UID}" | cut -d: -f1 || true)"
 [ -z "${USER_NAME}" ] && USER_NAME="appuser"
