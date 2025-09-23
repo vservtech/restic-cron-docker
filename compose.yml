@@ -1,9 +1,8 @@
-# run commands inside here with: 
-# docker-compose run ansible bash
-# if you want to run an ansible command, replace bash with ansible (yes, two times ansible in a row)
-# example command: 
-# docker-compose run ansible ansible all -m ping -u you 
-
 services: 
-    restic: 
+    restic-cron: 
         build: .
+        volumes:
+            - ./test/crontab:/opt/cron/crontab
+        environment:
+            - HOST_UID=$(id -u)
+            - HOST_GID=$(id -g)
