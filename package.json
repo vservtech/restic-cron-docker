@@ -3,17 +3,22 @@
   "version": "1.0.0",
   "description": "This repo contains a dockerfile which allows running a restic cron job inside a docker container.",
   "private": true,
+  "config": {
+    "image_name": "vservtech/restic-cron-docker"
+  },
   "scripts": {
     "dev": "docker compose up --build --remove-orphans",
     "start": "docker compose up -d --build --remove-orphans",
     "stop": "docker compose down",
     "shell": "docker compose run --build --remove-orphans restic-cron ash",
-    "build": "docker build -t $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) .",
-    "tag:latest": "docker tag $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version) $(bun -e \"console.log(Bun.env.image_name)\"):latest",
+    "build": "docker build -t $npm_package_config_image_name:$(bunx project-version) .",
+    "buildx": "docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull -t $npm_package_config_image_name:$(bunx project-version) .",
+    "tag:latest": "docker tag $npm_package_config_image_name:$(bunx project-version) $npm_package_config_image_name:latest",
     "docker-login": "docker login",
     "deploy": "run-s build tag:latest push:version push:latest",
-    "push:version": "docker push $(bun -e \"console.log(Bun.env.image_name)\"):$(bunx project-version)",
-    "push:latest": "docker push $(bun -e \"console.log(Bun.env.image_name)\"):latest"
+    "deployx": "docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull -t $npm_package_config_image_name:latest -t $npm_package_config_image_name:$npm_package_config_prod_version --push ./variants/ubuntu-pure",
+    "push:version": "docker push $npm_package_config_image_name:$(bunx project-version)",
+    "push:latest": "docker push $npm_package_config_image_name:latest"
   },
   "repository": {
     "type": "git",
