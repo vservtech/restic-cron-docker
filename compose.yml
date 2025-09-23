@@ -3,4 +3,6 @@ services:
         build: .
         volumes:
             - ./test/crontab:/opt/cron/crontab
+            - ./test/bash-demo.sh:/opt/cron/bash-demo.sh
+            - ./test/ash-demo.sh:/opt/cron/ash-demo.sh
         user: "${MY_UID}:${MY_GID}"
