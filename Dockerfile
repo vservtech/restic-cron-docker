@@ -14,6 +14,7 @@ ENV SUPERCRONIC_VERSION=v0.2.34
 # Map Docker arch to the release filename and expected sha1
 # Note: upstream uses amd64/arm64 in filenames
 # Update checksums if you bump SUPERCRONIC_VERSION
+# TODO: Check if SHA256 checksums are available
 ENV SUPERCRONIC_AMD64=supercronic-linux-amd64 \
     SUPERCRONIC_AMD64_SHA1=e8631edc1775000d119b70fd40339a7238eece14 \
     SUPERCRONIC_ARM64=supercronic-linux-arm64 \
