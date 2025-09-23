@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 - 2025-09-23
+
+- multi-arch build: for linux/amd64 and linux/arm64
+
 ## 1.0.0 - 2025-09-23
 
 - initial release
