@@ -19,7 +19,7 @@
 */5 * * * * * * /opt/cron/ash-demo.sh
 
 # Run every second
-*/1 * * * * * * /opt/cron/bash-demo.sh
+*/1 * * * * * * ./bash-demo.sh
 
 # Run once every hour
 # @hourly echo "$SOME_HOURLY_JOB"
