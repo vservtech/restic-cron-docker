@@ -50,7 +50,7 @@ if [ -d /opt/cron ]; then
   chown -R "${USER_NAME}:${GROUP_NAME}" /opt/cron
 fi
 
-echo "${LOG_PREFIX}: Command passed to docker exec: $*"
+echo "${LOG_PREFIX}: Main command: $*"
 
 # 5) If already correct uid/gid, just exec
 if [ "$(id -u)" = "${DESIRED_UID}" ] && [ "$(id -g)" = "${DESIRED_GID}" ]; then

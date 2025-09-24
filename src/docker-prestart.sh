@@ -1,10 +1,11 @@
 #!/bin/sh
 set -eu
 
-echo "PRESTART SCRIPT: Checking crontab syntax..."
+LOG_PREFIX="PRESTART SCRIPT"
+echo "${LOG_PREFIX}: Checking crontab syntax..."
 if supercronic -test -passthrough-logs /opt/cron/crontab; then
-    echo "✓ Crontab valid"
+    echo "${LOG_PREFIX}: ✓✓✓ Crontab valid ✓✓✓"
 else
-    echo "✗ Crontab check failed! Please check your crontab syntax." >&2
+    echo "${LOG_PREFIX}: ✗✗✗ Crontab check failed! ✗✗✗ Please check your crontab syntax. " >&2
     exit 1
 fi
