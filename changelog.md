@@ -1,5 +1,12 @@
 # Changelog
 
+1.2.0 - 2025-09-24
+
+- update entrypoint script to support LOG_PREFIX variable for better maintenance
+- update entrypoint script to support running a "prestart" script, if available.
+  USAGE: COPY or bind this script into the container at
+  `/usr/local/bin/prestart` and make it executable.
+
 ## 1.1.1 - 2025-09-23
 
 - add HOST_USER and HOST_GROUP to entrypoint script - allows passing in the name
