@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 - 2025-09-25
+
+- add vim and nano to the container
+
 1.2.0 - 2025-09-24
 
 - update entrypoint script to support LOG_PREFIX variable for better maintenance
