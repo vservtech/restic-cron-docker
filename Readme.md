@@ -2,7 +2,10 @@
 
 This repo contains a dockerfile which allows running a restic cron job inside a
 docker container.\
-[Link to Github](https://github.com/vservtech/restic-cron-docker)
+
+**[Link to Github](https://github.com/vservtech/restic-cron-docker)**
+
+**[Docker Hub](https://hub.docker.com/r/vservtech/restic-cron-docker)**
 
 **[CHANGELOG](https://github.com/vservtech/restic-cron-docker/blob/main/CHANGELOG.md)**
 
