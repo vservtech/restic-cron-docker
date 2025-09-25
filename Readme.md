@@ -109,7 +109,23 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
 - from outside: the container is based on alpine, so the shell to start is
   `/bin/ash`
 
-## For Developers: New Image release to docker
+## How to restore a backup with this container
+
+1. Run the container with the same volumes as the main service
+2. Mount a restore.sh script into the container which includes the restic
+   restore command
+3. replace the CMD for this image with calling the restore.sh script, for
+   example in docker compose:
+   ```yaml
+   # assuming cwd still in /opt/cron, as defined in the Dockerfile
+   sh -c "./restore.sh"
+   ```
+
+---
+
+# For Developers
+
+## New Image release to docker
 
 1. Check for updates of the base alpine image: see here for new versions:
    https://hub.docker.com/_/alpine/tags

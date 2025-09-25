@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2 - 2025-09-25
+
+- check in prestart script if crontab file exists at all before validating
+- add section in readme about restoring a backup with this container
+
 ## 1.2.1 - 2025-09-25
 
 - add vim and nano to the container
