@@ -15,9 +15,10 @@
     "build-amd64": "docker buildx build --platform linux/amd64 --no-cache --pull --load -t $npm_package_config_image_name:$(bunx project-version) . --load",
     "docker-login": "docker login",
     "deployx": "docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull --push -t $npm_package_config_image_name:$(bunx project-version) -t $npm_package_config_image_name:latest .",
+    "setup-buildx": "docker buildx create --name jb-buildx --use",
+    "_legacy": "",
     "push:version": "docker push $npm_package_config_image_name:$(bunx project-version)",
-    "push:latest": "docker push $npm_package_config_image_name:latest",
-    "setup-buildx": "docker buildx create --name jb-buildx --use"
+    "push:latest": "docker push $npm_package_config_image_name:latest"
   },
   "repository": {
     "type": "git",
