@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0 - 2025-11-15
+
+- add rsync to the container
+
 ## 1.3.0 - 2025-11-15
 
 - add sqlite3 to the container
