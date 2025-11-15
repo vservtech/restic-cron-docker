@@ -31,7 +31,9 @@ and run the restic backups on a schedule.
       image: vservtech/restic-cron-docker:latest
       volumes:
          - ./src/crontab:/opt/cron/crontab
-      user: "${MY_UID}:${MY_GID}"
+      environment:
+         - HOST_UID=${MY_UID}
+         - HOST_GID=${MY_GID}
    ```
 4. Run the container:
    ```shell
