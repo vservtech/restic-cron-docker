@@ -1,4 +1,6 @@
 ### PROD IMAGE 
+### DEFAULT USER: root
+### Set HOST_UID and HOST_GID vars to run the container as a specific user/group
 ### ------------
 
 FROM alpine:3.22.2
