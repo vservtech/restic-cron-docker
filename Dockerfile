@@ -1,6 +1,7 @@
 ### PROD IMAGE 
 ### DEFAULT USER: root
 ### Set HOST_UID and HOST_GID vars to run the container as a specific user/group
+### => will be used in docker-prestart.sh and docker-entrypoint.sh to ensure the correct user/group is used for the container
 ### ------------
 
 FROM alpine:3.22.2
