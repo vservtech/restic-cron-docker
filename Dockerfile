@@ -1,7 +1,7 @@
 ### PROD IMAGE 
 ### ------------
 
-FROM alpine:3.22.1
+FROM alpine:3.22.2
 
 # Install base dependencies
 RUN apk add --no-cache ca-certificates tzdata curl
@@ -37,7 +37,8 @@ RUN set -eux; \
 # Installing bash because most users expect this to be available for cronjob scripts
 # Installing openssh to allow restic to use ssh client for backups + having scp binary (also installs sshd, but this is not needed here)
 # Installing vim and nano for easy in-container file editing
-RUN apk add --no-cache restic su-exec bash openssh vim nano
+# Installing sqlite3 command for easy sqlite db backups (from sqlite package)
+RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite
 
 # Set workdir
 ENV CRON_DIR="/opt/cron"

@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.3.0 - 2025-11-15
+
+- add sqlite3 to the container
+- update alpine base image to 3.22.2
+
+```bash
+/opt/cron $ restic version
+restic 0.18.0 compiled with go1.24.8 on linux/arm64
+
+/opt/cron $ supercronic -version
+v0.2.34
+
+/opt/cron $ ssh -V
+OpenSSH_10.0p2, OpenSSL 3.5.4 30 Sep 2025
+
+/opt/cron $ sqlite3 --version
+3.49.2 2025-05-07 10:39:52 17144570b0d96ae63cd6f3edca39e27ebd74925252bbaf6723bcb2f6b4861fb1 (64-bit)
+
+/opt/cron $
+```
+
 ## 1.2.2 - 2025-09-25
 
 - check in prestart script if crontab file exists at all before validating

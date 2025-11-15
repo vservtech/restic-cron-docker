@@ -138,13 +138,16 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
    restic version
    supercronic -version
    ssh -V
+   sqlite3 --version
    ```
 4. Update the package.json version
 5. Update the CHANGELOG.md
 6. Sign-off new version for npm package
-7. Deploy with `bun run deploy` (runs build, tag:latest and push:version and
-   push:latest)
-8. Commit and tag the release in git
+7. Deploy with `bun run deployx` (runs build, tag:latest and push:version and
+   push:latest for both amd64 and arm64)
+8. Check if the new image is available on docker hub:
+   https://hub.docker.com/r/vservtech/restic-cron-docker/tags
+9. Commit and tag the release in git
 
 ## Ideas
 
