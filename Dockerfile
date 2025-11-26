@@ -42,7 +42,8 @@ RUN set -eux; \
 # Installing vim and nano for easy in-container file editing
 # Installing sqlite3 command for easy sqlite db backups (from sqlite package)
 # Installing rsync for file synchronization (mostly for preparing a backup folder for restic)
-RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync
+# Installing postgresql-client (for pg_dump) and mysql-client (for mysqldump) for database backups
+RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync postgresql-client mysql-client
 
 # Set workdir
 ENV CRON_DIR="/opt/cron"

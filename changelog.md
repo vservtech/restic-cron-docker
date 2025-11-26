@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.0 - 2025-11-26
+- add mysqldump to the container: mysqldump --version
+  mariadb-dump: Deprecated program name. It will be removed in a future release, use '/usr/bin/mariadb-dump' instead
+  mariadb-dump from 11.4.8-MariaDB, client 10.19 for Linux (aarch64)
+- add pg_dump to the container: 
+  pg_dump (PostgreSQL) 17.7
+
 ## 1.4.0 - 2025-11-15
 
 - add rsync to the container

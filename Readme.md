@@ -141,6 +141,8 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
    supercronic -version
    ssh -V
    sqlite3 --version
+   pg_dump --version
+   mysqldump --version # new: mariadb-dump
    ```
 4. Update the package.json version
 5. Update the CHANGELOG.md
