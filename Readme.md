@@ -92,6 +92,33 @@ You can use ash (default on alpine linux) or bash scripts in your crontab.
 5. Make sure the script is owned by the user running the container!
 6. Start the container interactively and see the logs.
 
+### How to use bun scripts in crontab
+
+1. Create the scripts in your repo, for example `src/bun-demo.ts`
+   ```typescript
+   #!/usr/bin/env bun
+   console.log(`hello from bun ${new Date().toISOString()}`)
+   ```
+2. Make sure the script is executable in your repo: `chmod +x src/bun-demo.ts`
+3. Mount the scripts into the container as a volume, example here for docker
+   compose: IMPORTANT: The path inside the container should be inside
+   `/opt/cron/` because this folder is configured for variable user/group the
+   container could be running under!
+   ```yaml
+   volumes:
+      - ./src/bun-demo.ts:/opt/cron/bun-demo.ts
+   ```
+4. Adjust your crontab to run the script: IMPORTANT: Use the absolute path to
+   the script inside the container to avoid PATH issues!
+   ```
+   */1 * * * * * * /opt/cron/bun-demo.ts
+   ```
+
+   If you don't want to use a shebang, you can use the bun command directly:
+   ```
+   */1 * * * * * * bun /opt/cron/bun-demo.ts
+   ```
+
 ### DeepDive: How to use `supercronic`
 
 Instructions: https://github.com/aptible/supercronic

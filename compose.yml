@@ -5,6 +5,7 @@ services:
             - ./test/crontab:/opt/cron/crontab
             - ./test/bash-demo.sh:/opt/cron/bash-demo.sh
             - ./test/ash-demo.sh:/opt/cron/ash-demo.sh
+            - ./test/bun-demo.ts:/opt/cron/bun-demo.ts
             # this version script is used to check the versions of the tools in the container
             - ./dev/versions.sh:/opt/cron/versions.sh
         environment:

@@ -21,5 +21,11 @@
 # Run every second
 */1 * * * * * * ./bash-demo.sh
 
+# Run every second 
+# */1 * * * * * * /opt/cron/bun-demo.ts
+
+# Run every second 
+*/1 * * * * * * bun /opt/cron/bun-demo.ts
+
 # Run once every hour
 # @hourly echo "$SOME_HOURLY_JOB"
