@@ -145,8 +145,3 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
 8. Check if the new image is available on docker hub:
    https://hub.docker.com/r/vservtech/restic-cron-docker/tags
 9. Commit and tag the release in git
-
-## Ideas
-
-- TODO: Evaluate adding bun into this image for simple (JavaScript-)scripting:
-  https://bun.com/docs/runtime/shell#sh-file-loader
