@@ -139,11 +139,12 @@ Backup some data: https://restic.readthedocs.io/en/latest/040_backup.html
 3. Update the package.json version
 4. Update the CHANGELOG.md
 5. Sign-off new version for npm package
-6. Deploy with `bun deployx` (runs build, tag:latest and push:version and
+6. Switch to the right buildx builder: `bun use-buildx` (if not exists, run `bun setup-buildx`)
+7. Deploy with `bun deployx` (runs build, tag:latest and push:version and
    push:latest for both amd64 and arm64)
-7. Check if the new image is available on docker hub:
+8. Check if the new image is available on docker hub:
    https://hub.docker.com/r/vservtech/restic-cron-docker/tags
-8. Commit and tag the release in git
+9. Commit and tag the release in git
 
 ## Ideas
 
