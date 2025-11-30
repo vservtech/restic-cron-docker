@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.0 - 2025-11-30
+- add bun 1.3.3 as scripting engine to the container
+
 ## 1.5.0 - 2025-11-26
 - add mysqldump to the container: mysqldump --version
   mariadb-dump: Deprecated program name. It will be removed in a future release, use '/usr/bin/mariadb-dump' instead

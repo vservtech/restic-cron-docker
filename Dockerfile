@@ -37,13 +37,20 @@ RUN set -eux; \
   ln -sf "/usr/local/bin/${BIN}" /usr/local/bin/supercronic
 
 # Install deps needed at runtime
-# Installing bash because most users expect this to be available for cronjob scripts
-# Installing openssh to allow restic to use ssh client for backups + having scp binary (also installs sshd, but this is not needed here)
-# Installing vim and nano for easy in-container file editing
-# Installing sqlite3 command for easy sqlite db backups (from sqlite package)
-# Installing rsync for file synchronization (mostly for preparing a backup folder for restic)
-# Installing postgresql-client (for pg_dump) and mysql-client (for mysqldump) for database backups
-RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync postgresql-client mysql-client
+# - bash, because most users expect this to be available for cronjob scripts
+# - openssh, to allow restic to use ssh client for backups + having scp binary (also installs sshd, but this is not needed here)
+# - vim, and nano, for easy in-container file editing
+# - sqlite package with sqlite3 command, for easy sqlite db backups
+# - rsync, for file synchronization (mostly for preparing a backup folder for restic)
+# - postgresql-client, for pg_dump command
+# - mysql-client, for mysqldump command
+# - unzip, for unzipping files, especially for installing bun
+RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync postgresql-client mysql-client unzip
+
+ENV BUN_INSTALL="/opt/bun"
+ENV PATH="${BUN_INSTALL}/bin:$PATH"
+RUN curl -fsSL https://bun.com/install | bash
+
 
 # Set workdir
 ENV CRON_DIR="/opt/cron"
