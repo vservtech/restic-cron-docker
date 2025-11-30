@@ -118,6 +118,12 @@ You can use ash (default on alpine linux) or bash scripts in your crontab.
    ```
    */1 * * * * * * bun /opt/cron/bun-demo.ts
    ```
+5. If your bun script needs dependencies, make sure they are available in the container! 
+   1. Option 1: convert your script to a bun compiled binary and mount this into the container 
+   4. Option 2: bundle your script with bun, rolldown, rollup, etc. to a single file and mount this into the container
+   3. Option 3: mount your package.json into `/opt/cron/package.json` and use bun install inside the container to install the dependencies manually
+   4. Option 4: mount your package.json into `/opt/cron/package.json` and use bun install via another cronjob
+   5. Option 5 (WIP): use a (user-defined) prestart script to install the dependencies (not implemented yet)
 
 ### DeepDive: How to use `supercronic`
 
