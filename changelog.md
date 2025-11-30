@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.6.0 - 2025-11-30
+## 1.6.1 - 2025-11-30
 - add bun 1.3.3 as scripting engine to the container
+- add README section about using bun scripts in crontab
 
 **Included tools:**
 ```
