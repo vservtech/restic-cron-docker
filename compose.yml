@@ -1,10 +1,12 @@
-services: 
-    restic-cron: 
+services:
+    restic-cron:
         build: .
         volumes:
             - ./test/crontab:/opt/cron/crontab
             - ./test/bash-demo.sh:/opt/cron/bash-demo.sh
             - ./test/ash-demo.sh:/opt/cron/ash-demo.sh
-        environment: 
+            # this version script is used to check the versions of the tools in the container
+            - ./dev/versions.sh:/opt/cron/versions.sh
+        environment:
             - HOST_UID=${MY_UID}
             - HOST_GID=${MY_GID}
