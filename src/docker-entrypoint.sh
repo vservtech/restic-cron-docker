@@ -45,14 +45,49 @@ fi
 USER_NAME="$(getent passwd "${DESIRED_UID}" | cut -d: -f1 || true)"
 [ -z "${USER_NAME}" ] && USER_NAME="${DESIRED_USER}"
 
-# 4) Ensure working directories are owned
+# 4) Set up home directory and SSH
+# Determine home directory path (root uses /root, others use /home/<username>)
+if [ "${DESIRED_UID}" = "0" ]; then
+  USER_HOME="/root"
+else
+  USER_HOME="/home/${USER_NAME}"
+fi
+
+echo "${LOG_PREFIX}: Setting up HOME: ${USER_HOME}"
+
+# Create home directory if it doesn't exist
+if [ ! -d "${USER_HOME}" ]; then
+  mkdir -p "${USER_HOME}"
+  chown "${USER_NAME}:${GROUP_NAME}" "${USER_HOME}"
+  echo "${LOG_PREFIX}: Created home directory: ${USER_HOME}"
+fi
+
+# Create .ssh directory if it doesn't exist (with secure permissions)
+# This allows users to mount SSH keys/config into the container
+SSH_DIR="${USER_HOME}/.ssh"
+if [ ! -d "${SSH_DIR}" ]; then
+  mkdir -p "${SSH_DIR}"
+  chmod 700 "${SSH_DIR}"
+  chown "${USER_NAME}:${GROUP_NAME}" "${SSH_DIR}"
+  echo "${LOG_PREFIX}: Created SSH directory: ${SSH_DIR}"
+else
+  # Ensure correct ownership even if directory was mounted
+  chown "${USER_NAME}:${GROUP_NAME}" "${SSH_DIR}"
+  chmod 700 "${SSH_DIR}"
+  echo "${LOG_PREFIX}: SSH directory exists: ${SSH_DIR} (ensured ownership and permissions)"
+fi
+
+# Export HOME so it's available to all child processes (including supercronic jobs)
+export HOME="${USER_HOME}"
+
+# 5) Ensure working directories are owned
 if [ -d /opt/cron ]; then
   chown -R "${USER_NAME}:${GROUP_NAME}" /opt/cron
 fi
 
 echo "${LOG_PREFIX}: Main command: $*"
 
-# 5) If already correct uid/gid, just exec
+# 6) If already correct uid/gid, just exec
 if [ "$(id -u)" = "${DESIRED_UID}" ] && [ "$(id -g)" = "${DESIRED_GID}" ]; then
 
   # Run prestart script
@@ -65,7 +100,7 @@ if [ "$(id -u)" = "${DESIRED_UID}" ] && [ "$(id -g)" = "${DESIRED_GID}" ]; then
   exec "$@"
 fi
 
-# 6) Exec as that user
+# 7) Exec as that user (drop privileges via su-exec)
 # Run prestart script as the desired user
 if [ -x /usr/local/bin/prestart ]; then
   echo "${LOG_PREFIX}: Running prestart script..."
