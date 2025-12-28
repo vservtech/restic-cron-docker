@@ -13,15 +13,14 @@ RUN apk add --no-cache ca-certificates tzdata curl
 ARG TARGETARCH
 
 # Latest releases available at https://github.com/aptible/supercronic/releases
-ENV SUPERCRONIC_VERSION=v0.2.34
+ENV SUPERCRONIC_VERSION=v0.2.41
 # Map Docker arch to the release filename and expected sha1
 # Note: upstream uses amd64/arm64 in filenames
 # Update checksums if you bump SUPERCRONIC_VERSION
-# TODO: Check if SHA256 checksums are available
 ENV SUPERCRONIC_AMD64=supercronic-linux-amd64 \
-    SUPERCRONIC_AMD64_SHA1=e8631edc1775000d119b70fd40339a7238eece14 \
+    SUPERCRONIC_AMD64_SHA1=f70ad28d0d739a96dc9e2087ae370c257e79b8d7 \
     SUPERCRONIC_ARM64=supercronic-linux-arm64 \
-    SUPERCRONIC_ARM64_SHA1=4ab6343b52bf9da592e8b4bb7ae6eb5a8e21b71e
+    SUPERCRONIC_ARM64_SHA1=44e10e33e8d98b1d1522f6719f15fb9469786ff0
 
 # Resolve name and checksum based on TARGETARCH
 RUN set -eux; \

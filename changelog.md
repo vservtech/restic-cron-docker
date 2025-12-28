@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.7.0 - 2025-12-28
+
+- **Fix: Cron jobs now run with correct user environment (HOME, SSH)**
+  - Supercronic jobs previously ran without proper HOME directory and SSH config
+  - Entrypoint now creates home directory (`/root` for UID 0, `/home/<user>` for others)
+  - Entrypoint now creates `~/.ssh` directory with correct permissions (700)
+  - `HOME` environment variable is exported and inherited by all cron jobs
+  - SSH keys/config can now be mounted into the container and will work correctly
+
+- Add test scripts: `bun run test:non-root` and `bun run test:root`
+
+-**Chore:** update the tools in the container, specifically: 
+
+- supercronic version: 0.2.41
+- bun version 1.3.5
+
+Full versions list: 
+
+```bash
+restic version: restic 0.18.0 compiled with go1.24.11 on linux/arm64
+supercronic version: v0.2.41
+ssh version:
+OpenSSH_10.0p2, OpenSSL 3.5.4 30 Sep 2025
+sqlite3 version: 3.49.2 2025-05-07 10:39:52 17144570b0d96ae63cd6f3edca39e27ebd74925252bbaf6723bcb2f6b4861fb1 (64-bit)
+pg_dump version: pg_dump (PostgreSQL) 17.7
+mysqldump: Deprecated program name. It will be removed in a future release, use '/usr/bin/mariadb-dump' instead
+mysqldump version: mysqldump from 11.4.8-MariaDB, client 10.19 for Linux (aarch64)
+bun version: 1.3.5
+```
+
 ## 1.6.1 - 2025-11-30
 - add bun 1.3.3 as scripting engine to the container
 - add README section about using bun scripts in crontab
