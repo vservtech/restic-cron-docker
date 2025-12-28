@@ -139,6 +139,7 @@ getent group "${GID}" >/dev/null 2>&1 || addgroup -g "${GID}" "${GROUP}"
 ### Environment Variables
 - `HOST_UID` / `HOST_GID`: Run container as specific user/group
 - `HOST_USER` / `HOST_GROUP`: Custom user/group names (default: appuser/appgroup)
+- `CHOWN_WORKDIR`: Set to `true` to chown `/opt/cron` to the container user (default: false)
 - `CRON_DIR`: Working directory path (default: /opt/cron)
 - `BUN_INSTALL`: Bun installation path (default: /opt/bun)
 

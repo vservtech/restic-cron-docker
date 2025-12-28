@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 - 2025-12-28
+
+- **Feature: Optional working directory ownership change**
+  - Added `CHOWN_WORKDIR` environment variable (default: `false`)
+  - The container no longer changes ownership of `/opt/cron` by default
+  - This prevents breaking mounted scripts that have different ownership on the host
+  - Set `CHOWN_WORKDIR=true` to enable ownership change when scripts are created with different ownership and need to be fixed inside the container
+
 ## 1.7.0 - 2025-12-28
 
 - **Fix: Cron jobs now run with correct user environment (HOME, SSH)**

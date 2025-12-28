@@ -1,6 +1,6 @@
 {
   "name": "restic-cron-docker",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "This repo contains a dockerfile which allows running a restic cron job inside a docker container.",
   "private": true,
   "config": {

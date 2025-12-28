@@ -80,9 +80,14 @@ fi
 # Export HOME so it's available to all child processes (including supercronic jobs)
 export HOME="${USER_HOME}"
 
-# 5) Ensure working directories are owned
-if [ -d /opt/cron ]; then
+# 5) Optionally chown working directory (disabled by default to avoid breaking mounted scripts)
+# Set CHOWN_WORKDIR=true if scripts are created with different ownership and need to be fixed
+CHOWN_WORKDIR="${CHOWN_WORKDIR:-false}"
+if [ "${CHOWN_WORKDIR}" = "true" ] && [ -d /opt/cron ]; then
+  echo "${LOG_PREFIX}: CHOWN_WORKDIR=true, changing ownership of /opt/cron to ${USER_NAME}:${GROUP_NAME}"
   chown -R "${USER_NAME}:${GROUP_NAME}" /opt/cron
+else
+  echo "${LOG_PREFIX}: CHOWN_WORKDIR=${CHOWN_WORKDIR}, skipping ownership change of /opt/cron"
 fi
 
 echo "${LOG_PREFIX}: Main command: $*"

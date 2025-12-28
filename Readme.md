@@ -35,6 +35,12 @@ and run the restic backups on a schedule.
          - HOST_UID=${MY_UID}
          - HOST_GID=${MY_GID}
    ```
+4. Optional: Enable ownership change of the working directory (`/opt/cron`):
+   ```yaml
+   environment:
+      - CHOWN_WORKDIR=true
+   ```
+   **Note:** By default, the container does NOT change ownership of `/opt/cron` to avoid breaking mounted scripts that have different ownership on the host. Set `CHOWN_WORKDIR=true` only if your backup scripts are created with different ownership and need to be fixed inside the container.
 4. Run the container:
    ```shell
    docker compose up -d
