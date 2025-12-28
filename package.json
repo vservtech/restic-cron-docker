@@ -1,6 +1,6 @@
 {
   "name": "restic-cron-docker",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "This repo contains a dockerfile which allows running a restic cron job inside a docker container.",
   "private": true,
   "config": {
@@ -12,6 +12,8 @@
     "stop": "docker compose down",
     "shell": "docker compose run --build --remove-orphans restic-cron ash",
     "versions": "docker compose run --build --remove-orphans restic-cron bash -c 'source /opt/cron/versions.sh'",
+    "test:non-root": "docker compose --env-file ./test/non-root.env up --build --remove-orphans",
+    "test:root": "docker compose --env-file ./test/root.env up --build --remove-orphans",
     "build": "docker build -t $npm_package_config_image_name:$(bunx project-version) -t $npm_package_config_image_name:latest .",
     "build-amd64": "docker buildx build --platform linux/amd64 --no-cache --pull --load -t $npm_package_config_image_name:$(bunx project-version) . --load",
     "docker-login": "docker login",
