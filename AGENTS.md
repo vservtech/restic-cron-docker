@@ -1,209 +1,138 @@
 # Agent Guidelines for restic-cron-docker
 
-This document provides guidelines for AI coding agents working on this Docker-based restic backup scheduler project.
+This file defines how agentic coding assistants should work in this repo.
 
 ## Project Overview
 
-A Docker container that runs restic backups on a cron schedule using supercronic. The container supports bash/ash/bun scripts, runs as configurable user/group, and includes tools like restic, postgresql-client, mysql-client, sqlite3, rsync, and ssh.
+This repository builds a Docker image that runs restic backups on a cron schedule
+using supercronic. The container supports ash/bash/bun scripts, can run as a
+configurable user/group, and ships tools like restic, rsync, ssh, and database
+clients.
 
-## Build, Test & Development Commands
+## Build, Run, and Test Commands
 
-### Docker Operations
+### Local Docker workflow
 ```bash
-# Build and run container interactively
 bun run dev                    # docker compose up --build --remove-orphans
-
-# Start container in background
 bun run start                  # docker compose up -d --build --remove-orphans
-
-# Stop container
 bun run stop                   # docker compose down
-
-# Get shell access (ash)
 bun run shell                  # docker compose run --build --remove-orphans restic-cron ash
-
-# Check installed tool versions
-bun run versions               # Runs versions.sh inside container
+bun run versions               # run versions.sh inside the container
 ```
 
-### Building & Deploying Images
+### Build and deploy images
 ```bash
-# Build local image with version tags
-bun run build                  # Tags with version from package.json + latest
-
-# Build for specific architecture
-bun run build-amd64            # Build for linux/amd64 only
-
-# Setup buildx for multi-arch builds
-bun run setup-buildx           # Create buildx builder
-bun run use-buildx             # Switch to buildx builder
-
-# Deploy multi-arch to Docker Hub
-bun run deployx                # Build & push linux/amd64 + linux/arm64
+bun run build                  # docker build, tag version + latest
+bun run build-amd64            # buildx for linux/amd64
+bun run setup-buildx           # create buildx builder
+bun run use-buildx             # switch to buildx builder
+bun run deployx                # buildx push linux/amd64 + linux/arm64
 ```
 
 ### Testing
-- No automated test suite currently exists
-- Manual testing: Use `bun run dev` and observe cron job execution in logs
-- Test scripts are in `test/` directory (bash-demo.sh, ash-demo.sh, bun-demo.ts)
-- Verify crontab syntax: Container runs prestart validation automatically
+- No automated test suite exists in this repo.
+- Manual smoke tests:
+  - `bun run dev` and watch logs for cron execution.
+  - `bun run test:root` or `bun run test:non-root` (docker compose with env files).
+- Single-test guidance:
+  - There is no single-test runner. To isolate behavior, prefer
+    `bun run test:root` or `bun run test:non-root` and limit changes to one
+    script in `test/`, or open a shell with `bun run shell` and run a specific
+    script manually.
 
 ## Code Style Guidelines
 
-### Shell Scripts (sh/bash)
+### Shell scripts (sh/bash)
+- Use `#!/bin/sh` for POSIX/Alpine, `#!/bin/bash` only when needed.
+- Start with `set -eu` for strict error handling.
+- Variables:
+  - Env/constants: `UPPER_SNAKE_CASE`
+  - Locals: `lower_snake_case`
+- Functions: `lower_snake_case`.
+- Use a `LOG_PREFIX` and prefix logs with it.
+- Send errors to stderr: `>&2`.
+- Always quote variables and paths.
+- Avoid bashisms in `sh` scripts.
 
-**File Headers:**
-```bash
-#!/bin/sh          # For POSIX-compliant scripts (alpine default)
-#!/bin/bash        # For bash-specific features
-set -eu            # Exit on error, fail on undefined variables
-```
-
-**Naming Conventions:**
-- Variables: `UPPER_SNAKE_CASE` for environment variables and constants
-- Local variables: `lower_snake_case`
-- Functions: `lower_snake_case`
-- Log prefixes: Use descriptive `LOG_PREFIX` variable
-
-**Error Handling:**
-```bash
-# Always check command success for critical operations
+### Error handling patterns
+```sh
 if ! command_that_might_fail; then
-    echo "${LOG_PREFIX}: ERROR: descriptive message" >&2
-    exit 1
+  echo "${LOG_PREFIX}: ERROR: description" >&2
+  exit 1
 fi
 
-# Use conditional execution for non-critical checks
 getent group "${GID}" >/dev/null 2>&1 || addgroup -g "${GID}" "${GROUP}"
 ```
 
-**Output:**
-- Use `echo` for informational messages
-- Redirect errors to stderr: `>&2`
-- Prefix log messages with `${LOG_PREFIX}:` for clarity
-- Use visual indicators: `✓✓✓` for success, `✗✗✗` for errors
-
-### TypeScript/Bun Scripts
-
-**File Headers:**
-```typescript
-#!/usr/bin/env bun
-```
-
-**Style:**
-- Use modern ES6+ syntax
-- Prefer `const` over `let`, avoid `var`
-- Use template literals for string interpolation
-- ISO 8601 dates: `new Date().toISOString()`
+### TypeScript/Bun scripts
+- Shebang: `#!/usr/bin/env bun`.
+- Prefer `const` and template literals.
+- Use ISO 8601 timestamps: `new Date().toISOString()`.
 
 ### Dockerfile
+- Single-stage, Alpine-based image.
+- Group related `RUN` commands to reduce layers.
+- Use `--no-cache` for `apk add`.
+- Set `ENV` before use, and use `ARG` for build-time values.
+- Comments explain why, not what.
+- Make scripts executable with `chmod +x`.
 
-**Structure:**
-- Multi-stage builds not used (single-stage alpine-based image)
-- Group related RUN commands to minimize layers
-- Use `--no-cache` for apk installations
-- Set environment variables before using them
-- Use ARG for build-time variables (e.g., TARGETARCH)
-
-**Conventions:**
-- Comments explain WHY, not WHAT
-- Verify checksums for downloaded binaries (SHA1/SHA256)
-- Install dependencies in logical groups
-- Set WORKDIR and create directories explicitly
-- Make scripts executable: `chmod +x`
-
-## File Organization
+## Repository Layout
 
 ```
 /
-├── src/                    # Source scripts for container
-│   ├── docker-entrypoint.sh   # Main entrypoint (user/group setup)
-│   └── docker-prestart.sh     # Validation script (crontab check)
-├── test/                   # Test scripts and example crontab
-├── dev/                    # Development utilities (versions.sh)
-├── Dockerfile              # Container definition
-├── compose.yml             # Docker Compose config
-├── package.json            # npm scripts and metadata
-└── README.md               # User documentation
+├── src/                  # Container scripts
+│   ├── docker-entrypoint.sh
+│   └── docker-prestart.sh
+├── test/                 # Demo/test scripts and crontab
+├── dev/                  # Development utilities
+├── Dockerfile            # Image definition
+├── compose.yml           # Docker Compose config
+├── package.json          # Scripts + metadata
+└── README.md             # User documentation
 ```
 
-## Important Conventions
+## Container Behavior and Conventions
 
-### Container Behavior
-- Default user: root (unless HOST_UID/HOST_GID specified)
-- Working directory: `/opt/cron`
-- Entrypoint creates users/groups dynamically if needed
-- Prestart script validates crontab syntax before starting
-- Uses `su-exec` to drop privileges (not `gosu` or `sudo`)
+- Default user is root unless `HOST_UID`/`HOST_GID` is set.
+- Working directory is `/opt/cron`.
+- Entrypoint may create user/group and then drops privileges via `su-exec`.
+- Prestart script validates crontab syntax with supercronic.
+- Do not run the container with `user:` in `compose.yml`.
 
-### Environment Variables
-- `HOST_UID` / `HOST_GID`: Run container as specific user/group
-- `HOST_USER` / `HOST_GROUP`: Custom user/group names (default: appuser/appgroup)
-- `CHOWN_WORKDIR`: Set to `true` to chown `/opt/cron` to the container user (default: false)
-- `CRON_DIR`: Working directory path (default: /opt/cron)
-- `BUN_INSTALL`: Bun installation path (default: /opt/bun)
+### Environment variables
+- `HOST_UID` / `HOST_GID`: desired UID/GID.
+- `HOST_USER` / `HOST_GROUP`: user/group names (defaults: appuser/appgroup).
+- `CHOWN_WORKDIR`: `true` to chown `/opt/cron` (default: false).
+- `CRON_DIR`: working directory path (default: `/opt/cron`).
+- `BUN_INSTALL`: bun install path (default: `/opt/bun`).
 
-### Volume Mounts
-- **Required:** `./crontab:/opt/cron/crontab` (cron schedule)
-- **Optional:** Mount scripts into `/opt/cron/` for execution
-- Scripts must be executable (`chmod +x`) on host
-- Use absolute paths in crontab entries
+### Volume mounts
+- Required: `./crontab:/opt/cron/crontab`.
+- Mount scripts into `/opt/cron/` and ensure they are executable.
+- Always use absolute paths in crontab entries.
 
-### Crontab Format
-- Uses supercronic (golang cronexpr)
-- Supports seconds-based resolution (7 fields vs standard 5)
-- Format: `Seconds Minutes Hours Day Month DayOfWeek Year`
-- Example: `*/1 * * * * * *` (every second)
-- Use `-passthrough-logs` flag for proper log output
+### Crontab format
+- Uses supercronic (cronexpr) with optional seconds.
+- Format: `Seconds Minutes Hours Day Month DayOfWeek Year`.
+- Example: `*/1 * * * * * *` (every second).
 
-## Error Handling Patterns
+## Linting and Formatting
 
-### Shell Scripts
-```bash
-# Validate required files exist
-if [ ! -f /path/to/file ]; then
-    echo "ERROR: File not found" >&2
-    exit 1
-fi
+- No lint/format scripts are configured in `package.json`.
+- For shell scripts, run `shellcheck` locally if available.
+- Keep formatting consistent with existing files; avoid reformatting unrelated
+  lines.
 
-# Check command availability
-if ! command -v tool >/dev/null 2>&1; then
-    echo "ERROR: tool not installed" >&2
-    exit 1
-fi
+## Release Process (High Level)
 
-# Validate user/group operations
-if ! adduser -D -u "${UID}" "${USER}"; then
-    echo "ERROR: adduser failed" >&2
-    exit 1
-fi
-```
+1. Check for new Alpine base image tags.
+2. Run `bun run versions` and update `CHANGELOG.md`.
+3. Bump `package.json` version.
+4. Build/push via `bun run deployx` after `bun run use-buildx`.
+5. Verify Docker Hub tags and then commit/tag.
 
-## Documentation Standards
+## Cursor/Copilot Rules
 
-- Update CHANGELOG.md for every release with version, date, changes, and tool versions
-- Update package.json version before release
-- README.md contains user-facing documentation
-- Code comments explain WHY, not WHAT
-- Use examples in documentation (crontab, docker-compose snippets)
-
-## Release Process
-
-1. Check for alpine base image updates
-2. Run `bun versions` to get current tool versions
-3. Update package.json version (semver)
-4. Update CHANGELOG.md with changes and tool versions
-5. Switch to buildx: `bun use-buildx`
-6. Deploy: `bun deployx` (builds & pushes multi-arch)
-7. Verify on Docker Hub
-8. Commit and tag in git
-
-## Common Pitfalls
-
-- **Don't** use `cd` in crontab entries; use absolute paths
-- **Don't** forget to make scripts executable (`chmod +x`)
-- **Don't** run container with `user:` in compose.yml (breaks entrypoint)
-- **Don't** mount scripts outside `/opt/cron/` (permission issues)
-- **Always** validate crontab syntax (prestart does this automatically)
-- **Always** use `set -eu` in shell scripts for safety
-- **Always** quote paths with spaces in shell commands
+- No `.cursor/rules`, `.cursorrules`, or `.github/copilot-instructions.md` were
+  found in this repository. Follow this `AGENTS.md` as the primary guidance.
