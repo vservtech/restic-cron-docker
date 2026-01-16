@@ -46,6 +46,18 @@ and run the restic backups on a schedule.
    docker compose up -d
    ```
 
+### PostgreSQL tools
+
+The image includes multiple `pg_dump` binaries on `PATH`:
+- `pg_dump` (latest)
+- `pg_dump16`
+- `pg_dump17`
+
+Example crontab entry:
+```
+0 3 * * * * /opt/cron/backup.sh --db-dump=pg_dump16
+```
+
 ### Chrontab content
 
 ```
