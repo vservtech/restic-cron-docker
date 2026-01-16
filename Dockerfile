@@ -41,10 +41,11 @@ RUN set -eux; \
 # - vim, and nano, for easy in-container file editing
 # - sqlite package with sqlite3 command, for easy sqlite db backups
 # - rsync, for file synchronization (mostly for preparing a backup folder for restic)
-# - postgresql-client, for pg_dump command
 # - mysql-client, for mysqldump command
 # - unzip, for unzipping files, especially for installing bun
-RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync postgresql-client mysql-client unzip
+RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync postgresql-client postgresql16-client postgresql17-client mysql-client unzip \
+  && ln -sf /usr/libexec/postgresql16/pg_dump /usr/local/bin/pg_dump16 \
+  && ln -sf /usr/libexec/postgresql17/pg_dump /usr/local/bin/pg_dump17
 
 ENV BUN_INSTALL="/opt/bun"
 ENV PATH="${BUN_INSTALL}/bin:$PATH"
