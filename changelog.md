@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.9.1 - 2026-01-21
+
+- **Feature: Multiple pg_restore versions**
+  - Added `pg_restore16` and `pg_restore17` to `PATH`
+  - Enables restoring backups to specific PostgreSQL versions
+
+Full versions list:
+
+```bash
+restic version: restic 0.18.0 compiled with go1.24.12 on linux/arm64
+supercronic version: v0.2.41
+ssh version:
+OpenSSH_10.0p2, OpenSSL 3.5.4 30 Sep 2025
+sqlite3 version: 3.49.2 2025-05-07 10:39:52 17144570b0d96ae63cd6f3edca39e27ebd74925252bbaf6723bcb2f6b4861fb1 (64-bit)
+pg_dump version: pg_dump (PostgreSQL) 17.7
+pg_dump16 version: pg_dump (PostgreSQL) 16.11
+pg_dump17 version: pg_dump (PostgreSQL) 17.7
+pg_restore16 version: pg_restore (PostgreSQL) 16.11
+pg_restore17 version: pg_restore (PostgreSQL) 17.7
+mysqldump: Deprecated program name. It will be removed in a future release, use '/usr/bin/mariadb-dump' instead
+mysqldump version: mysqldump from 11.4.8-MariaDB, client 10.19 for Linux (aarch64)
+bun version: 1.3.6
+```
+
 ## 1.9.0 - 2026-01-16
 
 - **Feature: Multiple pg_dump versions**

@@ -45,7 +45,11 @@ RUN set -eux; \
 # - unzip, for unzipping files, especially for installing bun
 RUN apk add --no-cache restic su-exec bash openssh vim nano sqlite rsync postgresql-client postgresql16-client postgresql17-client mysql-client unzip \
   && ln -sf /usr/libexec/postgresql16/pg_dump /usr/local/bin/pg_dump16 \
-  && ln -sf /usr/libexec/postgresql17/pg_dump /usr/local/bin/pg_dump17
+  && ln -sf /usr/libexec/postgresql17/pg_dump /usr/local/bin/pg_dump17 \
+  && ln -sf /usr/libexec/postgresql16/pg_restore /usr/local/bin/pg_restore16 \
+  && ln -sf /usr/libexec/postgresql17/pg_restore /usr/local/bin/pg_restore17 \
+  && ln -sf /usr/libexec/postgresql16/psql /usr/local/bin/psql16 \
+  && ln -sf /usr/libexec/postgresql17/psql /usr/local/bin/psql17
 
 ENV BUN_INSTALL="/opt/bun"
 ENV PATH="${BUN_INSTALL}/bin:$PATH"
